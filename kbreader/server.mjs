@@ -178,8 +178,11 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
 <title>${escapeHtml(title)} — KB Reader</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+@font-face { font-family:'Kinto Sans'; src:url('https://cdn.jsdelivr.net/gh/ookamiinc/kinto@master/Kinto%20Sans/KintoSans-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Kinto Sans'; src:url('https://cdn.jsdelivr.net/gh/ookamiinc/kinto@master/Kinto%20Sans/KintoSans-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Kinto Sans'; src:url('https://cdn.jsdelivr.net/gh/ookamiinc/kinto@master/Kinto%20Sans/KintoSans-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
   :root { color-scheme:dark; --bg:#0a0e1a; --bg-2:#12182b; --panel:rgba(20,28,48,.72); --panel-2:rgba(28,38,64,.85); --ink:#e8e6f2; --muted:#9aa0b4; --sakura:#ff7aa2; --sakura-2:#ffb3cc; --violet:#8b7cff; --glow:rgba(255,122,162,.35); --border:rgba(255,122,162,.22); --grid:rgba(255,255,255,.04); }
   * { box-sizing:border-box; }
   html { scroll-behavior:smooth; }
@@ -189,8 +192,8 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
   .layout { min-height:100vh; }
   aside { position:sticky; z-index:3; top:0; display:flex; align-items:center; gap:22px; min-height:62px; padding:9px clamp(16px,4vw,58px); background:rgba(10,14,26,.7); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); }
   .brand { display:flex; align-items:center; gap:9px; flex:none; text-decoration:none; }
-  .brand-mark { display:grid; place-items:center; width:31px; height:31px; background:linear-gradient(135deg,var(--sakura),var(--violet)); border-radius:8px; box-shadow:0 0 18px var(--glow); color:#fff; font:700 16px 'Noto Sans JP',sans-serif; }
-  .brand-name { display:block; font:700 14px 'Noto Sans JP',sans-serif; letter-spacing:-.02em; color:var(--sakura-2); }
+  .brand-mark { display:grid; place-items:center; width:31px; height:31px; background:linear-gradient(135deg,var(--sakura),var(--violet)); border-radius:8px; box-shadow:0 0 18px var(--glow); color:#fff; font:700 16px 'Kinto Sans',sans-serif; }
+  .brand-name { display:block; font:700 14px 'Kinto Sans',sans-serif; letter-spacing:-.02em; color:var(--sakura-2); }
   .brand-caption { display:none; }
   .side-label { color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:.12em; }
   .topbar { margin:0; }
@@ -214,14 +217,14 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
   .crumb { padding-top:35px; margin:0 0 18px; color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:.1em; }
   .crumb a { color:var(--sakura-2); }
   .hero-kicker { width:calc(100% + 2 * clamp(16px,5vw,72px)); margin:0 calc(-1 * clamp(16px,5vw,72px)); padding:clamp(36px,6vw,70px) clamp(16px,5vw,72px) 15px; border-top:1px solid var(--border); background:linear-gradient(135deg, rgba(255,122,162,.18), rgba(139,124,255,.12)); color:var(--sakura-2); font-size:9px; letter-spacing:.14em; text-transform:uppercase; }
-  main > h1 { position:relative; width:calc(100% + 2 * clamp(16px,5vw,72px)); max-width:none; margin:0 calc(-1 * clamp(16px,5vw,72px)) 0; padding:0 clamp(16px,5vw,72px) clamp(48px,8vw,96px); overflow-wrap:anywhere; border-bottom:1px solid var(--border); background:linear-gradient(135deg, rgba(255,122,162,.12), rgba(139,124,255,.08)); color:#fff; font:700 clamp(52px,10vw,132px)/.86 'Noto Sans JP',sans-serif; letter-spacing:-.06em; text-wrap:balance; text-shadow:0 0 28px var(--glow); }
+  main > h1 { position:relative; width:calc(100% + 2 * clamp(16px,5vw,72px)); max-width:none; margin:0 calc(-1 * clamp(16px,5vw,72px)) 0; padding:0 clamp(16px,5vw,72px) clamp(48px,8vw,96px); overflow-wrap:anywhere; border-bottom:1px solid var(--border); background:linear-gradient(135deg, rgba(255,122,162,.12), rgba(139,124,255,.08)); color:#fff; font:700 clamp(52px,10vw,132px)/.86 'Kinto Sans',sans-serif; letter-spacing:-.06em; text-wrap:balance; text-shadow:0 0 28px var(--glow); }
   .meta { display:flex; flex-wrap:wrap; gap:0; max-width:960px; margin:28px 0 30px; border:1px solid var(--border); border-radius:14px; background:var(--panel); box-shadow:0 8px 32px rgba(0,0,0,.35); overflow:hidden; }
   .meta-row { display:flex; align-items:center; gap:8px; padding:9px 13px; border-right:1px solid var(--border); border-bottom:1px solid var(--border); font-size:9px; }
   .meta-key { color:var(--muted); text-transform:uppercase; }
   .meta-key::after { content:':'; }
   .meta-val { font-weight:500; color:var(--ink); }
   article { max-width:960px; padding:clamp(20px,4vw,46px); border:1px solid var(--border); border-radius:16px; background:var(--panel); box-shadow:0 12px 40px rgba(0,0,0,.4); font-size:13px; line-height:1.8; backdrop-filter:blur(6px); }
-  article h1,article h2,article h3,article h4 { font-family:'Noto Sans JP',sans-serif; font-weight:700; line-height:1.1; letter-spacing:-.04em; color:var(--sakura-2); }
+  article h1,article h2,article h3,article h4 { font-family:'Kinto Sans',sans-serif; font-weight:700; line-height:1.1; letter-spacing:-.04em; color:var(--sakura-2); }
   article h1 { margin:2.2rem 0 .8rem; font-size:clamp(34px,5vw,64px); }
   article h2 { margin:2.2rem 0 .8rem; padding-bottom:.6rem; border-bottom:1px solid var(--border); font-size:clamp(25px,3vw,38px); }
   article h3 { margin:1.8rem 0 .6rem; font-size:22px; }
