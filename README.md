@@ -52,9 +52,7 @@ sources: []
 Explain how the agent selects a provider/model, and link to related pages.
 ```
 
-Agents read it with ordinary file tools; humans can browse it in `kbreader`:
-
-![kbreader example](assets/kbreader.png)
+Agents read it with ordinary file tools; humans can browse it in `kbreader`.
 
 > The reader is optional — without it, the same page is just a file on disk.
 
