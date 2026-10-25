@@ -22,7 +22,9 @@ passphrase. Do not commit `~/kb` to this repository — the data route is Salt's
 - **Salt** = encrypts the bundle (and a safe copy of `state.db`) before it
   leaves the machine: filenames hidden, public-key signed, restore via 12-word
   passphrase. Daily cron seals + pushes to a private GitHub repo.
-- **kbreader** = optional pure-Node markdown reader with a "Recent" view.
+- **kbreader** = optional pure-Node markdown reader with a "Recent" view. It is
+  not required: without it, the KB is just files on disk you write and read with
+  any editor, and Salt still handles encrypted backup.
 - **kb-upkeep** skill = event-driven capture of durable knowledge.
 - **opencode integration** = ambient instructions only (file-based access; no MCP).
 

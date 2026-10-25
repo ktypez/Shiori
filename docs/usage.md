@@ -6,6 +6,9 @@
 3. Open only the pages a question needs — do not load the whole folder.
 4. Cite the pages/sources you used.
 
+You do not need a reader: the KB is plain markdown files, so any editor or `cat`
+works. The optional `kbreader` gives a browsable "Recent" view if you want one.
+
 ## Capturing durable knowledge (event-driven)
 When you learn a durable fact, decision, preference, routine, or project detail:
 - Idea/pattern -> `kb/concepts/<slug>.md`
