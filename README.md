@@ -105,8 +105,10 @@ AGENTS.md    # contract for all agents
   skills here; commit and push.
 - **Service** = the live locations on a machine (`~/kb`, `~/.config/opencode`,
   `~/.agents/skills`, `~/.hermes/scripts`). These are updated only by running
-  `./install.sh` from a checkout — never by editing them in place and hoping the
+  `./deploy.sh` from a checkout — never by editing them in place and hoping the
   repo follows.
+- `./deploy.sh` copies the system into `$SHIORI_SERVICE_ROOT`
+  (default `~/.local/share/shiori`, no git) and then runs `install.sh`.
 
 Keep the two separate: the repo ships the system, Salt ships the data, and
 `install.sh` is the one-way bridge from dev to service.
