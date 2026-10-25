@@ -4,6 +4,17 @@
 - Python 3.11+, Node.js 18+, git, curl.
 - (Optional) Go 1.26+ to build Salt from source (no prebuilt binaries).
 
+## 0. One-shot system install (optional)
+
+Instead of copying files by hand, run:
+
+```bash
+./install.sh
+```
+
+It copies the skill, the daily backup script, and (if missing) `AGENTS.md`
+into `~/kb`. It never overwrites your knowledge data or your opencode config.
+
 ## 1. Knowledge base
 ```bash
 mkdir -p ~/kb/concepts ~/kb/entities ~/kb/sources
