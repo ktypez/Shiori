@@ -48,3 +48,10 @@ AGENTS.md    # contract for all agents
 The OKF bundle is created at `~/kb` during install (see docs/install.md). It is
 kept out of this repository and backed up via Salt. See
 [docs/salt-backup.md](docs/salt-backup.md).
+
+## Credits
+
+- **[Salt](https://github.com/spicy-lemonade/salt)** (MIT) — encrypted backup of
+  the knowledge base and database memories before they leave the machine.
+- **[OKF](https://github.com/scaccogatto/okf-skills)** — the Open Knowledge
+  Format v0.2 bundle structure and validator.
