@@ -99,7 +99,17 @@ docs/        # install, usage, salt-backup
 AGENTS.md    # contract for all agents
 ```
 
-## Data location
+## Service vs. dev
+
+- **Dev** = this repository (`~/shiori` or a clone). Edit code, docs, templates, and
+  skills here; commit and push.
+- **Service** = the live locations on a machine (`~/kb`, `~/.config/opencode`,
+  `~/.agents/skills`, `~/.hermes/scripts`). These are updated only by running
+  `./install.sh` from a checkout — never by editing them in place and hoping the
+  repo follows.
+
+Keep the two separate: the repo ships the system, Salt ships the data, and
+`install.sh` is the one-way bridge from dev to service.
 
 The OKF bundle is created at `~/kb` during install (see docs/install.md). It is
 kept out of this repository and backed up via Salt. See
