@@ -264,6 +264,7 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
   }
   @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition:none!important; } }
 
+</style>
 </head>
 <body>
 <div class="layout">
