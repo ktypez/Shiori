@@ -1,12 +1,13 @@
 import http from 'node:http';
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const KB_ROOT = path.resolve(process.env.KB_ROOT || '/home/admin/kb');
+const KB_ROOT = path.resolve(process.env.KB_ROOT || path.join(os.homedir(), 'kb'));
 const BASE_PATH = (process.env.BASE_PATH || '').replace(/\/+$/, '');
 const PORT = Number(process.env.PORT || 8124);
 const HOST = process.env.HOST || '0.0.0.0';

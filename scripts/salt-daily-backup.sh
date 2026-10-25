@@ -3,8 +3,7 @@
 # Idempotent: seals, commits only if changed, prunes old snapshots, force-pushes to origin.
 set -euo pipefail
 
-export PATH=/home/admin/.local/bin:/home/admin/.local/go/bin:$PATH
-export PATH=/home/admin/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$HOME/.local/go/bin:$PATH"
 
 REPO=${REPO:-$HOME/my-backup-repo}
 SRC=${SRC:-$HOME/kb}

@@ -13,7 +13,7 @@ PORT=8125 BASE_PATH='' node server.mjs   # standalone, root links
 
 ## Config (env)
 
-- `KB_ROOT`  — knowledge base dir (default `/home/admin/kb`)
+- `KB_ROOT`  — knowledge base dir (default `$HOME/kb`)
 - `PORT`     — listen port (default `8124`)
 - `HOST`     — bind address (default `0.0.0.0`)
 - `BASE_PATH`— public mount path (default `/kb`). Set to the dashboard route

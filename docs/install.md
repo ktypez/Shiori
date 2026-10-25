@@ -36,7 +36,7 @@ chmod +x ~/.hermes/scripts/salt-daily-backup.sh
 ```
 Create a cron job (Hermes) or add to crontab:
 ```
-0 3 * * * /home/admin/.hermes/scripts/salt-daily-backup.sh
+0 3 * * * ~/.hermes/scripts/salt-daily-backup.sh
 ```
 
 ## 4. kbreader (optional markdown reader)
@@ -48,7 +48,7 @@ cd kbreader && pnpm install   # or npm
 ## 5. opencode integration (optional)
 Copy `opencode/opencode.json` to `~/.config/opencode/opencode.json` (merge with yours).
 Place the `kb-upkeep` skill in `~/.agents/skills/kb-upkeep/SKILL.md`.
-Access is file-based: point `instructions` at `/home/admin/kb/AGENTS.md`; no MCP server is used.
+Access is file-based: point `instructions` at `~/kb/AGENTS.md`; no MCP server is used.
 
 ## 6. GitHub remote
 ```bash

@@ -1,9 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "instructions": [
-    "/home/admin/kb/AGENTS.md"
+    "/path/to/kb/AGENTS.md"
   ],
   "skills": [
-    "/home/admin/.agents/skills"
+    "/path/to/.agents/skills"
   ]
 }

@@ -21,7 +21,7 @@ Do NOT use for ephemeral chatter, one-off commands, or transient state.
 
 ## Bundle location
 - `~/kb` (OKF v0.2): `index.md`, `concepts/`, `entities/`, `sources/`, `log.md`.
-- Backup: `~/my-backup-repo` (Salt), pushed to `https://github.com/ktypez/mcky-hermes-backup`.
+- Backup: `~/my-backup-repo` (Salt), pushed to your private backup repo.
 - Shared by all local agents (Hermes, opencode, ...). Keep it agent-neutral.
 
 ## Procedure
@@ -57,7 +57,7 @@ A memory service's DB is not a 1:1 source of pages. Migrate by **synthesis**, no
 4. **Filter before synthesizing.** Skip entries that are auto-generated, migrated boilerplate, or one-off session transcripts; keep facts, decisions, gotchas, project details, and user profile.
 5. **Validate** (frontmatter `type`, relative links resolve) and seal+push as usual.
 
-When minimem is the source: its DB lives at `/srv/lab/state/minimem/data/minimem.db` (SQLite; tables `memories`, `tags`, `history`). Native (non-migrated) entries are the higher-value subset.
+When minimem is the source: its DB lives at `<path-to-minimem.db>` (SQLite; tables `memories`, `tags`, `history`). Native (non-migrated) entries are the higher-value subset.
 
 ## Rules
 - Never store secrets (tokens, passwords, hashes) in the bundle — reference their location only.
