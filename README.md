@@ -101,7 +101,7 @@ AGENTS.md    # contract for all agents
 
 ## Service vs. dev
 
-- **Dev** = this repository (`~/shiori` or a clone). Edit code, docs, templates, and
+- **Dev** = this repository (`~/projects/shiori` or a clone). Edit code, docs, templates, and
   skills here; commit and push.
 - **Service** = the live locations on a machine (`~/kb`, `~/.config/opencode`,
   `~/.agents/skills`, `~/.hermes/scripts`). These are updated only by running
