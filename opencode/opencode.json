@@ -1,23 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "local/auto",
-  "small_model": "local/auto",
-  "providers": {
-    "local": {
-      "name": "9router",
-      "package": "aisdk:@ai-sdk/openai-compatible",
-      "settings": {
-        "baseURL": "http://127.0.0.1:20128/v1",
-        "apiKey": "{file:/home/admin/.9router/api-keys/opencode.key}"
-      },
-      "models": {
-        "auto": {
-          "modelID": "auto",
-          "name": "auto"
-        }
-      }
-    }
-  },
   "instructions": [
     "/home/admin/kb/AGENTS.md"
   ],
