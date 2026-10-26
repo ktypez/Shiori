@@ -174,7 +174,7 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#1557f5">
+<meta name="theme-color" content="#ff7aa2">
 <title>${escapeHtml(title)} — KB Reader</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -273,8 +273,8 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
 <div class="layout">
   <aside aria-label="Knowledge base navigation">
     <a class="brand" href="${homeHref}">
-      <span class="brand-mark" aria-hidden="true">K</span>
-      <span><span class="brand-name">Knowledge Base</span><span class="brand-caption">A quiet place to think</span></span>
+      <span class="brand-mark" aria-hidden="true">栞</span>
+      <span><span class="brand-name">Shiori</span><span class="brand-caption">a bookmark for durable knowledge</span></span>
     </a>
     <div class="topbar"><a href="${homeHref}"><span class="home-icon" aria-hidden="true">⌂</span>Home</a></div>
     <button class="browse-toggle" id="browse-toggle" type="button" aria-expanded="false" aria-controls="notes-nav">Browse +</button>
@@ -285,7 +285,7 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
   </aside>
   <main>
     <div class="crumb">${currentRel ? `<a href="${homeHref}">Knowledge Base</a> &nbsp;/&nbsp; ${escapeHtml(currentRel)}` : 'Knowledge Base'}</div>
-    <div class="hero-kicker">FIELD NOTES &nbsp; / &nbsp; INTERNAL KNOWLEDGE SYSTEM</div>
+    <div class="hero-kicker">SHIORI &nbsp; / &nbsp; DURABLE KNOWLEDGE</div>
     <h1>${escapeHtml(title)}</h1>
     <div class="ticker" aria-hidden="true"><span>READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp; READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp;</span></div>
     ${metaHtml}
