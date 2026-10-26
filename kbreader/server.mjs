@@ -179,6 +179,31 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          sakura: "#ff7aa2",
+          "sakura-2": "#ffc2d6",
+          violet: "#8b7cff",
+          mint: "#7ce7c4",
+          amber: "#ffd27a",
+          rose: "#ff6b8a",
+          ink: "#f0eef8",
+          muted: "#9aa0b8",
+          dim: "#6b6f82",
+          bg: "#070a14",
+        },
+        fontFamily: {
+          sans: ["Kinto Sans", "Inter", "system-ui", "sans-serif"],
+          mono: ["DM Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        },
+      },
+    },
+  };
+</script>
 <style>
 @font-face { font-family:'Kinto Sans'; src:url('https://cdn.jsdelivr.net/gh/ookamiinc/kinto@master/Kinto%20Sans/KintoSans-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
 @font-face { font-family:'Kinto Sans'; src:url('https://cdn.jsdelivr.net/gh/ookamiinc/kinto@master/Kinto%20Sans/KintoSans-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
@@ -285,87 +310,91 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
 
 </style>
 </head>
-<body>
+<body class="antialiased">
 <div class="petals" aria-hidden="true"><span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span></div>
-<div class="layout">
-  <aside class="sidebar" id="sidebar">
-    <a class="brand" href="${homeHref}">
-      <span class="brand-mark" aria-hidden="true">栞</span>
-      <span><span class="brand-name">Shiori</span><span class="brand-caption">a bookmark for durable knowledge</span></span>
-    </a>
-    <nav class="mb-3 space-y-0.5">
-      <a class="navlink" href="${homeHref}"><span class="glyph">栞</span><span>Home · index.md</span></a>
-      <a class="navlink" href="${homeHref}/new"><span class="glyph">+</span><span>New page</span></a>
-      <a class="navlink" href="${homeHref}/log"><span class="glyph">≡</span><span>Log · log.md</span></a>
-      <a class="navlink" href="${homeHref}/validate"><span class="glyph">✓</span><span>Validate</span></a>
-      <a class="navlink" href="${homeHref}/backup"><span class="glyph">⌘</span><span>Backup · Salt</span></a>
-      <a class="navlink" href="${homeHref}/agents"><span class="glyph">◎</span><span>AGENTS.md</span></a>
-    </nav>
-    <div class="search-wrap">
-      <input class="search-input" id="nav-search" type="search" placeholder="filter tree · ⏎ full search" autocomplete="off" aria-label="Filter notes" />
-    </div>
-    <nav class="nav" id="notes-nav" aria-label="Notes">${treeHtml}</nav>
-    <div class="mt-4 grid grid-cols-3 gap-2 border-t border-[var(--border)] pt-3">
-      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">concepts</div></div>
-      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">entities</div></div>
-      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">sources</div></div>
-    </div>
-    <p class="mt-3 px-1 text-[9px] leading-relaxed text-dim">Markdown + YAML frontmatter. <code class="font-mono">cat</code> reads it. <code class="font-mono">git clone</code> ships it.</p>
-  </aside>
-  <main class="main">
-    <div class="topbar">
-      <span class="title">Shiori</span>
-      <div class="actions">
-        <button class="chip browse-toggle" id="browse-toggle" type="button" aria-expanded="false" aria-controls="notes-nav">Browse</button>
-        <a class="chip" href="${homeHref}">Home</a>
+<div class="relative z-10 flex min-h-screen">
+  <main class="min-w-0 flex-1">
+    <div class="mx-auto w-full max-w-5xl px-5 py-6 sm:px-8 lg:px-12 lg:py-9">
+      <div class="mb-2 flex flex-wrap items-start justify-between gap-3">
+        <div class="font-mono text-[11px] tracking-wider text-muted">
+          <a href="${homeHref}" class="text-sakura-2">Shiori</a>
+          ${currentRel ? `<span class="mx-2 text-dim">/</span><span class="text-sakura-2">${escapeHtml(currentRel)}</span>` : ''}
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="${homeHref}/new" class="chip chip-primary">+ new page</a>
+          <a href="${homeHref}/edit/${currentRel || 'index.md'}" class="chip">edit</a>
+          <a href="/api/export" class="chip">export .tar</a>
+        </div>
+      </div>
+      <header class="rise mb-6">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div class="min-w-0">
+            <div class="kicker mb-2">SHIORI / DURABLE KNOWLEDGE</div>
+            <h1 class="m-0 text-[clamp(28px,4.5vw,46px)] leading-[1.08] font-bold tracking-[-0.025em] text-ink">${escapeHtml(title)}</h1>
+            <p class="mt-3 mb-0 max-w-2xl text-[15px] text-muted">A quiet place to think. Open only the pages a question needs.</p>
+          </div>
+        </div>
+      </header>
+      <div class="ticker mb-7" aria-hidden="true"><span class="ticker-track">READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp; READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp;</span></div>
+      <div class="mb-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="panel px-5 py-4">
+          <div class="kicker mb-2">bundle</div>
+          <div class="stat-num">—</div>
+          <div class="mt-1 font-mono text-[11px] text-dim">concepts · entities · sources</div>
+        </div>
+      </div>
+      <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+        <div class="min-w-0">
+          <article class="rise rise-3">${bodyHtml}</article>
+        </div>
+        <aside class="space-y-6">
+          <section>
+            <div class="mb-3 flex items-center justify-between gap-3"><h2 class="m-0 flex items-center gap-2 text-[13px] font-semibold tracking-wide text-sakura-2"><span class="text-sakura">✳</span>Recent</h2></div>
+            <div class="panel divide-y divide-[var(--border-soft)]">
+              <p class="px-4 py-3 text-sm text-dim">Open a page to see recent changes.</p>
+            </div>
+          </section>
+        </aside>
       </div>
     </div>
-    <div class="crumb">${currentRel ? `<a href="${homeHref}">Shiori</a> &nbsp;/&nbsp; ${escapeHtml(currentRel)}` : 'Shiori'}</div>
-    <div class="hero">
-      <div class="hero-kicker">SHIORI / DURABLE KNOWLEDGE</div>
-      <h1>${escapeHtml(title)}</h1>
-      <p>A quiet place to think. Open only the pages a question needs.</p>
-    </div>
-    <div class="ticker" aria-hidden="true"><span>READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp;</span></div>
-    <div class="meta">${metaHtml}</div>
-    <article>${bodyHtml}</article>
   </main>
+  <aside class="sidebar-shell flex h-screen w-[280px] shrink-0 flex-col overflow-y-auto px-4 py-5 lg:sticky lg:top-0">
+    <a href="${homeHref}" class="brand mb-5 flex items-center gap-3">
+      <span class="brand-mark">栞</span>
+      <span class="leading-tight">
+        <span class="block text-[16px] font-bold tracking-tight text-sakura-2">Shiori</span>
+        <span class="block text-[10px] text-muted">durable knowledge · OKF v0.2</span>
+      </span>
+    </a>
+    <form class="mb-4" onsubmit="return false;">
+      <div class="relative">
+        <input id="nav-search" type="search" placeholder="filter tree · ⏎ full search" autocomplete="off" aria-label="Filter notes" class="input !rounded-full !py-2 !pr-14 !font-mono !text-[11px]" />
+        <span class="kbd absolute top-1/2 right-3 -translate-y-1/2">⌘K</span>
+      </div>
+    </form>
+    <nav class="mb-5 space-y-0.5">
+      <a href="${homeHref}" class="navlink"><span class="glyph">栞</span><span>Home · index.md</span></a>
+      <a href="${homeHref}/new" class="navlink"><span class="glyph">+</span><span>New page</span></a>
+      <a href="${homeHref}/log" class="navlink"><span class="glyph">≡</span><span>Log · log.md</span></a>
+      <a href="${homeHref}/validate" class="navlink"><span class="glyph">✓</span><span>Validate</span></a>
+      <a href="${homeHref}/backup" class="navlink"><span class="glyph">⌘</span><span>Backup · Salt</span></a>
+      <a href="${homeHref}/agents" class="navlink"><span class="glyph">◎</span><span>AGENTS.md</span></a>
+    </nav>
+    <div class="mb-2 flex items-center justify-between px-1">
+      <span class="kicker">~/kb</span>
+    </div>
+    <div class="tree flex-1">${treeHtml}</div>
+    <p class="mt-4 px-1 text-[10px] leading-relaxed text-dim">Markdown + YAML frontmatter. <code class="font-mono">cat</code> reads it. <code class="font-mono">git clone</code> ships it.</p>
+  </aside>
 </div>
 <script>
-  const sidebar = document.querySelector('.sidebar');
-  const browse = document.querySelector('#browse-toggle');
-  browse?.addEventListener('click', () => {
-    const open = sidebar.classList.toggle('open');
-    browse.setAttribute('aria-expanded', String(open));
-    browse.textContent = open ? 'Close' : 'Browse';
-    if (open) document.querySelector('#nav-search')?.focus();
-  });
   const search = document.querySelector('#nav-search');
-  document.addEventListener('click', (e) => {
-    if (!sidebar.classList.contains('open')) return;
-    if (sidebar.contains(e.target) || browse.contains(e.target)) return;
-    sidebar.classList.remove('open');
-    browse.setAttribute('aria-expanded', 'false');
-    browse.textContent = 'Browse';
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
-      sidebar.classList.remove('open');
-      browse.setAttribute('aria-expanded', 'false');
-      browse.textContent = 'Browse';
-    }
-  });
   const links = [...document.querySelectorAll('nav a')];
   search?.addEventListener('input', () => {
     const query = search.value.trim().toLocaleLowerCase();
     for (const link of links) {
       const item = link.closest('li');
-      item.hidden = query !== '' && !link.textContent.toLocaleLowerCase().includes(query);
-    }
-    for (const folder of document.querySelectorAll('nav .dir')) {
-      const item = folder.closest('li');
-      const hasVisibleNote = [...item.querySelectorAll('a')].some(link => !link.closest('li').hidden);
-      item.hidden = query !== '' && !folder.textContent.toLocaleLowerCase().includes(query) && !hasVisibleNote;
+      if (item) item.hidden = query !== '' && !link.textContent.toLocaleLowerCase().includes(query);
     }
   });
 </script>
