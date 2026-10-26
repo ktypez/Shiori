@@ -186,18 +186,18 @@ function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
 :root { color-scheme:dark; --bg:#070a14; --bg-2:#0f1526; --panel:rgba(18,26,46,.62); --panel-2:rgba(28,38,64,.78); --ink:#f0eef8; --muted:#9aa0b8; --sakura:#ff7aa2; --sakura-2:#ffc2d6; --violet:#8b7cff; --glow:rgba(255,122,162,.4); --border:rgba(255,122,162,.18); --grid:rgba(255,255,255,.03); }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { margin:0; min-height:100vh; background:radial-gradient(1400px 900px at 90% -20%, rgba(255,122,162,.22), transparent 55%), radial-gradient(1000px 800px at -10% 10%, rgba(139,124,255,.2), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2)); color:var(--ink); font-family:'Inter',system-ui,sans-serif; font-size:14px; -webkit-font-smoothing:antialiased; line-height:1.6; overflow-x:hidden; }
+body { margin:0; min-height:100vh; background:radial-gradient(1400px 900px at 90% -20%, rgba(255,122,162,.22), transparent 55%), radial-gradient(1000px 800px at -10% 10%, rgba(139,124,255,.2), transparent 60%), linear-gradient(180deg, var(--bg), var(--bg-2)); color:var(--ink); font-family:'Kinto Sans','Inter',system-ui,sans-serif; font-size:16px; -webkit-font-smoothing:antialiased; line-height:1.7; overflow-x:hidden; }
 body::before { content:''; position:fixed; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 30%, rgba(255,122,162,.06), transparent 40%), radial-gradient(circle at 80% 70%, rgba(139,124,255,.05), transparent 45%); z-index:0; }
 a { color:var(--sakura-2); text-decoration:none; transition:color .2s, text-shadow .2s; }
 a:hover { color:#fff; text-shadow:0 0 14px var(--glow); }
 .layout { position:relative; z-index:1; min-height:100vh; display:grid; grid-template-columns:1fr 260px; gap:0; }
-.sidebar { order:2; position:sticky; top:0; height:100vh; overflow:auto; padding:24px 18px; background:rgba(10,14,26,.55); backdrop-filter:blur(14px); border-left:1px solid var(--border); animation:slideInRight .6s ease-out; }
+.sidebar { order:2; position:sticky; top:0; height:100vh; overflow:auto; padding:24px 18px; background:rgba(10,14,26,.55); backdrop-filter:blur(14px); border-left:1px solid var(--border); }
 .sidebar::-webkit-scrollbar { width:6px; }
 .sidebar::-webkit-scrollbar-thumb { background:rgba(255,122,162,.25); border-radius:3px; }
 .brand { display:flex; align-items:center; gap:10px; text-decoration:none; margin-bottom:20px; }
 .brand-mark { display:grid; place-items:center; width:34px; height:34px; background:linear-gradient(135deg,var(--sakura),var(--violet)); border-radius:10px; box-shadow:0 0 20px var(--glow); color:#fff; font:700 18px 'Kinto Sans',sans-serif; transition:transform .3s; }
 .brand:hover .brand-mark { transform:rotate(-8deg) scale(1.05); }
-.brand-name { display:block; font:700 15px 'Kinto Sans',sans-serif; letter-spacing:-.02em; color:var(--sakura-2); }
+.brand-name { display:block; font:700 16px 'Kinto Sans',sans-serif; letter-spacing:-.02em; color:var(--sakura-2); }
 .brand-caption { display:block; font-size:10px; color:var(--muted); margin-top:2px; }
 .search-wrap { margin:14px 0 18px; }
 .search-input { width:100%; padding:9px 14px; border:1px solid var(--border); border-radius:999px; outline:none; background:rgba(255,255,255,.05); color:var(--ink); font:10px 'DM Mono',monospace; transition:all .2s; }
@@ -206,7 +206,7 @@ a:hover { color:#fff; text-shadow:0 0 14px var(--glow); }
 .nav { margin-top:6px; }
 .nav ul { list-style:none; padding-left:12px; margin:4px 0; border-left:1px solid var(--border); }
 .nav li { margin:2px 0; }
-.nav li > a { display:block; padding:6px 9px; font-size:10px; text-decoration:none; border-radius:8px; transition:all .18s; }
+.nav li > a { display:block; padding:7px 10px; font-size:12px; text-decoration:none; border-radius:8px; transition:all .18s; }
 .nav li > a:hover,.nav li > a.active { background:rgba(255,122,162,.12); color:var(--sakura-2); transform:translateX(2px); }
 .nav .dir { display:block; padding:7px 9px 3px; color:var(--muted); font-size:9px; text-transform:uppercase; letter-spacing:.12em; }
 .nav li[hidden] { display:none; }
@@ -226,7 +226,7 @@ a:hover { color:#fff; text-shadow:0 0 14px var(--glow); }
 .meta-key { color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
 .meta-key::after { content:':'; }
 .meta-val { font-weight:500; color:var(--ink); }
-article { max-width:920px; padding:clamp(22px,4vw,44px); border:1px solid var(--border); border-radius:18px; background:var(--panel); box-shadow:0 16px 48px rgba(0,0,0,.4); font-size:13px; line-height:1.8; backdrop-filter:blur(8px); animation:fadeInUp .6s ease-out .1s both; }
+article { max-width:920px; padding:clamp(22px,4vw,44px); border:1px solid var(--border); border-radius:18px; background:var(--panel); box-shadow:0 16px 48px rgba(0,0,0,.4); font-size:15px; line-height:1.8; backdrop-filter:blur(8px); animation:fadeInUp .6s ease-out .1s both; }
 article h1,article h2,article h3,article h4 { font-family:'Kinto Sans',sans-serif; font-weight:700; line-height:1.1; letter-spacing:-.04em; color:var(--sakura-2); }
 article h1 { margin:2.2rem 0 .8rem; font-size:clamp(34px,5vw,64px); }
 article h2 { margin:2.2rem 0 .8rem; padding-bottom:.6rem; border-bottom:1px solid var(--border); font-size:clamp(25px,3vw,38px); }
@@ -327,6 +327,20 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
     if (open) document.querySelector('#nav-search')?.focus();
   });
   const search = document.querySelector('#nav-search');
+  document.addEventListener('click', (e) => {
+    if (!sidebar.classList.contains('open')) return;
+    if (sidebar.contains(e.target) || browse.contains(e.target)) return;
+    sidebar.classList.remove('open');
+    browse.setAttribute('aria-expanded', 'false');
+    browse.textContent = 'Browse';
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      browse.setAttribute('aria-expanded', 'false');
+      browse.textContent = 'Browse';
+    }
+  });
   const links = [...document.querySelectorAll('nav a')];
   search?.addEventListener('input', () => {
     const query = search.value.trim().toLocaleLowerCase();
