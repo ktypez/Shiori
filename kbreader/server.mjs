@@ -293,10 +293,24 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
       <span class="brand-mark" aria-hidden="true">栞</span>
       <span><span class="brand-name">Shiori</span><span class="brand-caption">a bookmark for durable knowledge</span></span>
     </a>
+    <nav class="mb-3 space-y-0.5">
+      <a class="navlink" href="${homeHref}"><span class="glyph">栞</span><span>Home · index.md</span></a>
+      <a class="navlink" href="${homeHref}/new"><span class="glyph">+</span><span>New page</span></a>
+      <a class="navlink" href="${homeHref}/log"><span class="glyph">≡</span><span>Log · log.md</span></a>
+      <a class="navlink" href="${homeHref}/validate"><span class="glyph">✓</span><span>Validate</span></a>
+      <a class="navlink" href="${homeHref}/backup"><span class="glyph">⌘</span><span>Backup · Salt</span></a>
+      <a class="navlink" href="${homeHref}/agents"><span class="glyph">◎</span><span>AGENTS.md</span></a>
+    </nav>
     <div class="search-wrap">
-      <input class="search-input" id="nav-search" type="search" placeholder="Search notes..." autocomplete="off" aria-label="Filter notes" />
+      <input class="search-input" id="nav-search" type="search" placeholder="filter tree · ⏎ full search" autocomplete="off" aria-label="Filter notes" />
     </div>
     <nav class="nav" id="notes-nav" aria-label="Notes">${treeHtml}</nav>
+    <div class="mt-4 grid grid-cols-3 gap-2 border-t border-[var(--border)] pt-3">
+      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">concepts</div></div>
+      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">entities</div></div>
+      <div class="text-center"><div class="font-mono text-[13px] text-ink">—</div><div class="font-mono text-[8px] tracking-[0.16em] text-dim uppercase">sources</div></div>
+    </div>
+    <p class="mt-3 px-1 text-[9px] leading-relaxed text-dim">Markdown + YAML frontmatter. <code class="font-mono">cat</code> reads it. <code class="font-mono">git clone</code> ships it.</p>
   </aside>
   <main class="main">
     <div class="topbar">
