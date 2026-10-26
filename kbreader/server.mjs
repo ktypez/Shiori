@@ -60,6 +60,25 @@ function recentMdFiles(limit = 30) {
   return out.sort((a, b) => b.mtime - a.mtime).slice(0, limit);
 }
 
+function bundleStats() {
+  const files = listMdFiles(KB_ROOT);
+  const count = (section) => files.filter((rel) => rel.startsWith(section + '/')).length;
+  return { total: files.length, concepts: count('concepts'), entities: count('entities'), sources: count('sources') };
+}
+
+function renderRecentList(files) {
+  if (!files.length) return '<p class="recent-empty">No pages yet.</p>';
+  return `<ul class="recent-list">${files.map(({ rel, mtime }) => {
+    const href = (BASE_PATH ? BASE_PATH + '/' : '/') + rel.split('/').map(encodeURIComponent).join('/');
+    const name = rel.split('/').pop().replace(/\.md$/i, '');
+    return `<li><a href="${href}">${escapeHtml(name)}</a><span class="recent-time">${escapeHtml(relativeTime(mtime))}</span></li>`;
+  }).join('')}</ul>`;
+}
+
+function renderStats(stats) {
+  return `<div class="stat-num">${stats.total}</div><div class="stat-breakdown">${stats.concepts} concepts · ${stats.entities} entities · ${stats.sources} sources</div>`;
+}
+
 function relativeTime(ts) {
   const diff = Date.now() - ts;
   const s = Math.round(diff / 1000);
@@ -167,7 +186,7 @@ function renderFrontmatter(data) {
   return html;
 }
 
-function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml }) {
+function renderPage({ title, bodyHtml, metaHtml, currentRel, treeHtml, stats = bundleStats(), recentHtml = renderRecentList(recentMdFiles(8)) }) {
   const homeHref = BASE_PATH ? BASE_PATH : '/';
   return `<!doctype html>
 <html lang="en">
@@ -306,14 +325,129 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
   article { padding:18px; }
   .meta-row { padding:7px 9px; }
 }
+/* Classes used by the current reader layout. */
+.reader-shell { width:100%; }
+.layout-main { min-width:0; flex:1; }
+.layout-content { grid-template-columns:minmax(0,1fr) 320px; }
+
+:root { --border-soft:rgba(255,255,255,.08); }
+.relative { position:relative; }
+.z-10 { z-index:10; }
+.flex { display:flex; }
+.flex-1 { flex:1 1 0%; }
+.min-w-0 { min-width:0; }
+.min-h-screen { min-height:100vh; }
+.mx-auto { margin-inline:auto; }
+.w-full { width:100%; }
+.max-w-5xl { max-width:64rem; }
+.shrink-0 { flex-shrink:0; }
+.flex-col { flex-direction:column; }
+.flex-wrap { flex-wrap:wrap; }
+.items-center { align-items:center; }
+.items-start { align-items:flex-start; }
+.items-end { align-items:flex-end; }
+.justify-between { justify-content:space-between; }
+.justify-center { justify-content:center; }
+.gap-2 { gap:.5rem; }
+.gap-3 { gap:.75rem; }
+.gap-4 { gap:1rem; }
+.gap-8 { gap:2rem; }
+.space-y-6 > * + * { margin-top:1.5rem; }
+.px-4 { padding-inline:1rem; }
+.px-5 { padding-inline:1.25rem; }
+.py-4 { padding-block:1rem; }
+.py-5 { padding-block:1.25rem; }
+.py-6 { padding-block:1.5rem; }
+.p-4 { padding:1rem; }
+.mb-2 { margin-bottom:.5rem; }
+.mb-4 { margin-bottom:1rem; }
+.mb-5 { margin-bottom:1.25rem; }
+.mb-6 { margin-bottom:1.5rem; }
+.mb-7 { margin-bottom:1.75rem; }
+.mb-8 { margin-bottom:2rem; }
+.mt-4 { margin-top:1rem; }
+.mt-3 { margin-top:.75rem; }
+.m-0 { margin:0; }
+.text-center { text-align:center; }
+.text-ink { color:var(--ink); }
+.text-muted { color:var(--muted); }
+.text-dim { color:#6b6f82; }
+.text-sakura { color:var(--sakura); }
+.text-sakura-2 { color:var(--sakura-2); }
+.font-mono { font-family:'DM Mono',monospace; }
+.font-bold { font-weight:700; }
+.font-semibold { font-weight:600; }
+.text-sm { font-size:.875rem; }
+.text-\\[13px\\] { font-size:13px; }
+.leading-tight { line-height:1.25; }
+.leading-relaxed { line-height:1.625; }
+.rounded-full { border-radius:999px; }
+.overflow-y-auto { overflow-y:auto; }
+.grid { display:grid; }
+.border-t { border-top:1px solid var(--border-soft); }
+.divide-y > * + * { border-top:1px solid var(--border-soft); }
+.sidebar-shell { order:2; position:sticky; top:0; z-index:20; width:280px; height:100vh; padding:20px 16px; overflow:auto; background:rgba(10,14,26,.82); border-left:1px solid var(--border); backdrop-filter:blur(16px); }
+.brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
+.brand-mark { display:grid; place-items:center; flex:none; width:38px; height:38px; border-radius:12px; background:linear-gradient(135deg,var(--sakura),var(--violet)); box-shadow:0 0 20px var(--glow); color:#fff; font:700 18px 'Kinto Sans',sans-serif; }
+.chip { display:inline-flex; align-items:center; min-height:34px; padding:6px 12px; border:1px solid var(--border); border-radius:999px; background:rgba(255,255,255,.04); color:var(--sakura-2); font-size:11px; text-decoration:none; }
+.chip:hover,.navlink:hover { background:rgba(255,122,162,.12); }
+.chip-primary { background:rgba(255,122,162,.14); }
+.kicker { color:var(--sakura-2); font:500 10px 'DM Mono',monospace; letter-spacing:.13em; text-transform:uppercase; }
+.panel { padding:16px; border:1px solid var(--border); border-radius:14px; background:var(--panel); box-shadow:0 8px 26px rgba(0,0,0,.22); }
+.stat-num { color:#fff; font:700 30px/1.1 'Kinto Sans',sans-serif; }
+.stat-breakdown { margin-top:6px; color:var(--muted); font:10px 'DM Mono',monospace; }
+.input { width:100%; padding:9px 14px; border:1px solid var(--border); outline:none; background:rgba(255,255,255,.05); color:var(--ink); }
+.input:focus { border-color:var(--sakura); box-shadow:0 0 0 3px var(--glow); }
+.kbd { padding:2px 5px; border:1px solid var(--border); border-radius:5px; color:var(--muted); font:10px 'DM Mono',monospace; }
+.navlink { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; color:var(--muted); font-size:12px; text-decoration:none; }
+.navlink .glyph { width:20px; color:var(--sakura); text-align:center; }
+.tree { min-height:0; overflow:auto; }
+.tree ul { list-style:none; margin:4px 0; padding-left:12px; border-left:1px solid var(--border); }
+.tree > ul { padding-left:0; border:0; }
+.tree li { margin:2px 0; }
+.tree a { display:block; padding:5px 8px; border-radius:7px; color:var(--muted); font-size:12px; text-decoration:none; }
+.tree a:hover,.tree a.active { color:var(--sakura-2); background:rgba(255,122,162,.12); }
+.tree .dir { display:block; padding:6px 8px 2px; color:#7e849b; font:10px 'DM Mono',monospace; text-transform:uppercase; letter-spacing:.1em; }
+.tree li[hidden] { display:none; }
+.recent-list { list-style:none; display:block; padding:0; margin:0; }
+.recent-list li { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:9px 12px; border-bottom:1px solid var(--border-soft); font-size:12px; }
+.recent-list li:last-child { border-bottom:0; }
+.recent-list li a { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.recent-empty { padding:10px 12px; color:var(--muted); font-size:12px; }
+.rise { animation:fadeInUp .5s ease-out both; }
+.ticker-track { display:inline-block; padding-left:100%; animation:marquee 32s linear infinite; font-size:9px; letter-spacing:.12em; text-transform:uppercase; }
+.browse-toggle,.sidebar-close,.drawer-backdrop { display:none; }
+.layout-main { min-width:0; flex:1; }
+.meta { margin:0 0 20px; }
+.meta-row { font-size:11px; }
+.meta-val { overflow-wrap:anywhere; }
+@media (max-width:900px) {
+  .sidebar-shell { position:fixed; inset:0 0 0 auto; width:min(320px,88vw); transform:translateX(105%); transition:transform .25s ease; box-shadow:-18px 0 45px rgba(0,0,0,.45); }
+  .sidebar-shell.open { transform:translateX(0); }
+  .browse-toggle { display:inline-flex; }
+  .sidebar-close { display:inline-flex; align-self:flex-end; margin:-4px 0 10px; }
+  .drawer-backdrop.open { display:block; position:fixed; inset:0; z-index:19; border:0; background:rgba(3,5,12,.58); }
+  .layout-content { grid-template-columns:minmax(0,1fr); }
+  .layout-content > aside { order:2; }
+  .page-header { display:none; }
+  .sidebar-shell { order:0; }
+  .reader-shell { display:block; }
+  .page-title { font-size:36px; }
+}
+@media (min-width:901px) { .drawer-backdrop { display:none!important; } }
+@media (max-width:600px) {
+  .max-w-5xl { padding-inline:16px; }
+  .chip { min-height:32px; padding:5px 9px; font-size:10px; }
+  article { padding:18px; }
+}
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition:none!important; } .petals { display:none; } }
 
 </style>
 </head>
 <body class="antialiased">
 <div class="petals" aria-hidden="true"><span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span><span>🌸</span></div>
-<div class="relative z-10 flex min-h-screen">
-  <main class="min-w-0 flex-1">
+<div class="reader-shell relative z-10 flex min-h-screen">
+<main class="layout-main min-w-0 flex-1">
     <div class="mx-auto w-full max-w-5xl px-5 py-6 sm:px-8 lg:px-12 lg:py-9">
       <div class="mb-2 flex flex-wrap items-start justify-between gap-3">
         <div class="font-mono text-[11px] tracking-wider text-muted">
@@ -321,12 +455,13 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
           ${currentRel ? `<span class="mx-2 text-dim">/</span><span class="text-sakura-2">${escapeHtml(currentRel)}</span>` : ''}
         </div>
         <div class="flex flex-wrap items-center gap-2">
+          <button class="chip browse-toggle" id="browse-toggle" type="button" aria-expanded="false" aria-controls="reader-sidebar">Browse</button>
           <a href="${homeHref}/new" class="chip chip-primary">+ new page</a>
-          <a href="${homeHref}/edit/${currentRel || 'index.md'}" class="chip">edit</a>
-          <a href="/api/export" class="chip">export .tar</a>
+          <a href="${homeHref}/edit/${encodeURIComponent(currentRel || 'index.md')}" class="chip">edit</a>
+          <a href="${BASE_PATH || ''}/api/export" class="chip">export .tar</a>
         </div>
       </div>
-      <header class="rise mb-6">
+      <header class="page-header rise mb-6">
         <div class="flex flex-wrap items-end justify-between gap-4">
           <div class="min-w-0">
             <div class="kicker mb-2">SHIORI / DURABLE KNOWLEDGE</div>
@@ -337,28 +472,28 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
       </header>
       <div class="ticker mb-7" aria-hidden="true"><span class="ticker-track">READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp; READ DEEPLY &nbsp; ✳ &nbsp; KEEP CONTEXT &nbsp; ✳ &nbsp; MAKE KNOWLEDGE USEFUL &nbsp; ✳ &nbsp;</span></div>
       <div class="mb-8 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <div class="panel px-5 py-4">
-          <div class="kicker mb-2">bundle</div>
-          <div class="stat-num">—</div>
-          <div class="mt-1 font-mono text-[11px] text-dim">concepts · entities · sources</div>
-        </div>
+        <section class="panel px-5 py-4">
+          <div class="kicker mb-2">bundle pages</div>
+          ${renderStats(stats)}
+        </section>
       </div>
-      <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div class="layout-content grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div class="min-w-0">
+          ${metaHtml}
           <article class="rise rise-3">${bodyHtml}</article>
         </div>
         <aside class="space-y-6">
           <section>
             <div class="mb-3 flex items-center justify-between gap-3"><h2 class="m-0 flex items-center gap-2 text-[13px] font-semibold tracking-wide text-sakura-2"><span class="text-sakura">✳</span>Recent</h2></div>
-            <div class="panel divide-y divide-[var(--border-soft)]">
-              <p class="px-4 py-3 text-sm text-dim">Open a page to see recent changes.</p>
-            </div>
+            <div class="panel divide-y divide-[var(--border-soft)]">${recentHtml}</div>
           </section>
         </aside>
       </div>
     </div>
   </main>
-  <aside class="sidebar-shell flex h-screen w-[280px] shrink-0 flex-col overflow-y-auto px-4 py-5 lg:sticky lg:top-0">
+  <button class="drawer-backdrop" id="drawer-backdrop" type="button" aria-label="Close navigation"></button>
+  <aside class="sidebar-shell flex h-screen w-[280px] shrink-0 flex-col overflow-y-auto px-4 py-5 lg:sticky lg:top-0" id="reader-sidebar" aria-label="Knowledge base navigation">
+    <button class="chip sidebar-close" id="sidebar-close" type="button">Close</button>
     <a href="${homeHref}" class="brand mb-5 flex items-center gap-3">
       <span class="brand-mark">栞</span>
       <span class="leading-tight">
@@ -388,13 +523,39 @@ article th { background:rgba(255,122,162,.12); color:var(--sakura-2); }
   </aside>
 </div>
 <script>
+  const sidebar = document.querySelector('#reader-sidebar');
+  const backdrop = document.querySelector('#drawer-backdrop');
+  const browse = document.querySelector('#browse-toggle');
+  const close = document.querySelector('#sidebar-close');
+  const setDrawer = (open) => {
+    sidebar?.classList.toggle('open', open);
+    backdrop?.classList.toggle('open', open);
+    browse?.setAttribute('aria-expanded', String(open));
+    if (open) document.querySelector('#nav-search')?.focus();
+  };
+  browse?.addEventListener('click', () => setDrawer(true));
+  close?.addEventListener('click', () => setDrawer(false));
+  backdrop?.addEventListener('click', () => setDrawer(false));
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') setDrawer(false); });
   const search = document.querySelector('#nav-search');
-  const links = [...document.querySelectorAll('nav a')];
+  const links = [...document.querySelectorAll('.tree a')];
   search?.addEventListener('input', () => {
     const query = search.value.trim().toLocaleLowerCase();
     for (const link of links) {
       const item = link.closest('li');
       if (item) item.hidden = query !== '' && !link.textContent.toLocaleLowerCase().includes(query);
+    }
+    for (const folder of document.querySelectorAll('.tree .dir')) {
+      const item = folder.closest('li');
+      const hasVisibleNote = [...item.querySelectorAll('a')].some((link) => !link.closest('li').hidden);
+      item.hidden = query !== '' && !folder.textContent.toLocaleLowerCase().includes(query) && !hasVisibleNote;
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (window.matchMedia('(max-width: 900px)').matches) setDrawer(true);
+      search?.focus();
     }
   });
 </script>
@@ -445,7 +606,9 @@ function handle(req, res) {
       bodyHtml: `<div class="listing"><ul>${items}</ul></div>`,
       metaHtml: '',
       currentRel: relPath,
-      treeHtml
+      treeHtml,
+      stats: bundleStats(),
+      recentHtml: renderRecentList(recentMdFiles(8))
     });
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.end(html);
@@ -489,36 +652,23 @@ function renderFile(res, currentRel, fileRel) {
   const rewritten = rewriteMarkdownLinks(content, currentRelDir);
   let bodyHtml = marked.parse(rewritten);
 
-  // On the home page, append a "Recent" list of the 10 most recently modified files.
-  if (currentRel === 'index.md') {
-    const items = recentMdFiles(10)
-      .filter(({ rel }) => rel !== 'index.md')
-      .map(({ rel, mtime }) => {
-        const href = (BASE_PATH ? BASE_PATH + '/' : '/') + rel.split('/').map(encodeURIComponent).join('/');
-        const name = rel.split('/').pop().replace(/\.md$/i, '');
-        return `<li><a href="${href}">${escapeHtml(name)}</a><span class="recent-time">${escapeHtml(relativeTime(mtime))}</span></li>`;
-      }).join('');
-    if (items) {
-      bodyHtml += `<h2>Recent</h2><div class="listing"><ul class="recent-list">${items}</ul></div>`;
-    }
-  }
-
-  const title = data.title || path.basename(currentRel, '.md');
-  const metaHtml = renderFrontmatter(data);
-
-  const treeHtml = renderTree(buildTree(listMdFiles(KB_ROOT)), currentRel);
-
-  const html = renderPage({
-    title,
+  // Render recent pages in the sidebar; the main article stays focused on note content.
+  const recent = recentMdFiles(8).filter(({ rel }) => rel !== 'AGENTS.md');
+  const stats = bundleStats();
+  const recentHtml = renderRecentList(recent);
+  if (currentRel === 'index.md') bodyHtml = marked.parse(rewritten);
+  const pageHtml = renderPage({
+    title: data.title || path.basename(currentRel, '.md'),
     bodyHtml,
-    metaHtml,
+    metaHtml: renderFrontmatter(data),
     currentRel,
-    treeHtml
+    treeHtml: renderTree(buildTree(listMdFiles(KB_ROOT)), currentRel),
+    stats,
+    recentHtml
   });
-
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'no-cache');
-  res.end(html);
+  res.end(pageHtml);
 }
 
 const server = http.createServer((req, res) => {
